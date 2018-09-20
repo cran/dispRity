@@ -10,7 +10,7 @@ chrono.subsets(data, tree, method, time, model, inc.nodes = FALSE,
                     FADLAD, verbose = FALSE, t0 = FALSE)
 }
 \arguments{
-\item{data}{A matrix.}
+\item{data}{A \code{matrix} (see details).}
 
 \item{tree}{A \code{phylo} object matching the data and with a \code{root.time} element. This argument can be left missing if \code{method = "discrete"} and all elements are present in the optional \code{FADLAD} argument.}
 
@@ -40,6 +40,8 @@ Use \link{summary.dispRity} to summarise the \code{dispRity} object.
 Splits the data into a chronological (time) subsets list.
 }
 \details{
+The data is considered as the multidimensional space with rows as elements and columns as dimensions and is not transformed (e.g. if ordinated with negative eigen values, no correction is applied to the matrix).
+
 If \code{method = "continuous"} and when the sampling is done along an edge of the tree, the data selected for the time subsets is can be one of the following:
 \itemize{
      \item Punctuated models:
@@ -51,7 +53,7 @@ If \code{method = "continuous"} and when the sampling is done along an edge of t
      }
      \item Gradual models:
      \itemize{
-         \item \code{"equal.split"}: randomly selected from the ancestral node or the descendant node or tip with a 50% probability each.
+         \item \code{"equal.split"}: randomly selected from the ancestral node or the descendant node or tip with a 50\% probability each.
          \item \code{"gradual.split"}: selects the ancestral node or the descendant with a probability relative to branch length.
      }
 }
@@ -77,6 +79,9 @@ chrono.subsets(data = BeckLee_mat99, tree = BeckLee_tree,
      method = "continuous", model = "acctran", time = 5,
      FADLAD = BeckLee_ages)
 
+}
+\references{
+Guillerme T. & Cooper N. \bold{2018}. Time for a rethink: time sub-sampling methods in disparity-through-time analyses. Palaeontology. DOI: 10.1111/pala.12364.
 }
 \seealso{
 \code{\link{tree.age}}, \code{\link{slice.tree}}, \code{\link{cust.subsets}}, \code{\link{boot.matrix}}, \code{\link{dispRity}}.
