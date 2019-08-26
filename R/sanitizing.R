@@ -84,16 +84,20 @@ check.method <- function(argument, all_arguments, msg, condition = all) {
 }
 
 ## Checking if a matrix is a distance matrix
-check.dist.matrix <- function(matrix, method, just.check = FALSE) {
+check.dist.matrix <- function(matrix, method, just.check = FALSE, ...) {
 
     ## Is distance
     was_dist <- FALSE
+
+    ## Check if distance
+    if(class(matrix)[1] == "dist") {
+        return(list(matrix, "was_dist" = TRUE))
+    }
 
     ## Is the matrix square?
     if(dim(matrix)[1] == dim(matrix)[2] &&
        all(diag(matrix) == 0) &&
        all(matrix[upper.tri(matrix)] == matrix[rev(lower.tri(matrix))])) {
-
         ## It was a distance matrix!
         was_dist <- TRUE
     }
@@ -106,7 +110,7 @@ check.dist.matrix <- function(matrix, method, just.check = FALSE) {
         if(was_dist) {
             return(list(stats::as.dist(matrix), "was_dist" = TRUE))
         } else {
-            return(list(vegan::vegdist(matrix, method = method), "was_dist" = FALSE))
+            return(list(vegan::vegdist(matrix, method = method, ...), "was_dist" = FALSE))
         }
     }
 }
@@ -115,3 +119,22 @@ check.dist.matrix <- function(matrix, method, just.check = FALSE) {
 stop.call <- function(call, msg, msg.pre = "") {
     stop(paste0(msg.pre, as.expression(call), msg), call. = FALSE)
 }
+
+## Check through a list
+check.list <- function(list, check.fun, condition, ...) {
+    ## Run the checks
+    check_results <- lapply(list, check.fun, ...)
+    ## Apply the condition
+    if(!missing(condition)) {
+        return(unlist(lapply(check_results, condition)))
+    } else {
+        return(unlist(check_results))
+    }
+}
+
+## Function for test results with rounding
+expect_equal_round <- function(x, y, digits) {
+    testthat::expect_equal(round(x, digits), round(y, digits))
+}
+
+
