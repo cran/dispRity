@@ -1,6 +1,3 @@
-----
-<!-- * 2017/10/18 - v1.0 *got you covered*  -->
-
 <!-- 
 dispRity 0.2.0 (2016-04-01)
 =========================
@@ -25,6 +22,12 @@ dispRity 0.2.0 (2016-04-01)
 <!--   * `dtt.dispRity` now works with any tree (including non-ultrametric ones and fossils only ones). -->
 <!--   * `dtt.dispRity` now works with time-slicing. -->
 
+dispRity v1.3.1 (2019-09-02)
+=========================
+
+### BUG FIXES
+
+  * update `redcude.matrix` to work with `vegan::vegdist` version 2.5-6 (thanks to [Jari Oksanen for the fix](https://github.com/TGuillerme/dispRity/pull/85)).
 
 dispRity v1.3 *many metrics* (2019-08-15)
 =========================
