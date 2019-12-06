@@ -22,12 +22,17 @@ dispRity 0.2.0 (2016-04-01)
 <!--   * `dtt.dispRity` now works with any tree (including non-ultrametric ones and fossils only ones). -->
 <!--   * `dtt.dispRity` now works with time-slicing. -->
 
-dispRity v1.3.1 (2019-09-02)
+dispRity v1.3.3 (2019-12-06)
 =========================
 
 ### BUG FIXES
 
-  * update `redcude.matrix` to work with `vegan::vegdist` version 2.5-6 (thanks to [Jari Oksanen for the fix](https://github.com/TGuillerme/dispRity/pull/85)).
+  * update `reduce.matrix` to work with `vegan::vegdist` version 2.5-6 (thanks to [Jari Oksanen for the fix](https://github.com/TGuillerme/dispRity/pull/85)).
+  * updated class evaluations throughout the package for `R` version `4.0.0`: `class(.) == *` is now `is(., *)`.
+
+### MINOR IMPROVEMENTS
+
+  * minor warning message fix for `plot.dispRity` with time slices.
 
 dispRity v1.3 *many metrics* (2019-08-15)
 =========================

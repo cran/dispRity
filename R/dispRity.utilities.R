@@ -108,8 +108,8 @@ fill.dispRity <- function(data) {
 #' ## To get the original matrix
 #' matrix.dispRity(disparity)
 #' 
-#' ## To get the un-bootstrapped matrix from the second subset
-#' matrix.dispRity(disparity, subsets = 2)
+#' ## To get the un-bootstrapped matrix from the subset called "80"
+#' matrix.dispRity(disparity, subsets = "80")
 #' 
 #' ## To get the 52nd bootstrap draw of the second rarefaction level (15) of the
 #' ## same subset
@@ -334,7 +334,7 @@ rescale.dispRity <- function(data, center = FALSE, scale = TRUE, use.all = TRUE,
     }
 
     ## Getting the center value
-    if(class(center) == "logical") {
+    if(is(center, "logical")) {
         if(center & use.all) {
             center <- mean(all_data, na.rm = TRUE)
         }
@@ -344,7 +344,7 @@ rescale.dispRity <- function(data, center = FALSE, scale = TRUE, use.all = TRUE,
     }
 
     ## Getting the scale value
-    if(class(scale) == "logical") {
+    if(is(scale, "logical")) {
         if(scale & use.all) {
             scale <- max(all_data)
         }

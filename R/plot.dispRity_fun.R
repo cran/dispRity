@@ -489,7 +489,7 @@ plot.preview <- function(data, dimensions, xlab, ylab, ylim, col, ...) {
         if(n_groups == 1) {
             plot_args$col <- "black"
         } else {
-            if(data$call$subsets == "customised") {
+            if(data$call$subsets[[1]] == "customised") {
                 plot_args$col <- gg.color.hue(n_groups)
             } else {
                 plot_args$col <- grDevices::heat.colors(n_groups+2)[1:n_groups]
@@ -654,7 +654,7 @@ plot.preview <- function(data, dimensions, xlab, ylab, ylim, col, ...) {
 
 #Plot sequential.test shortcut
 # if(length(class(data)) == 2) {
-#     if(class(data)[[1]] == "dispRity" && class(data)[[2]] == "seq.test") {
+#     if(is(data, "dispRity") && is(data, "seq.test")) {
 
 #         #lines.args sanitizing
 #         if(!is.null(lines.args)) check.class(lines.args, "list")
@@ -670,7 +670,7 @@ plot.preview <- function(data, dimensions, xlab, ylab, ylim, col, ...) {
 
 #         #significance sanitizing
 #         if(is_distribution == TRUE) {
-#             if(class(significance) == "character") {
+#             if(is(significance, "character")) {
 #                 if(significance != "cent.tend") {stop("significance argument must be either 'cent.tend' or a single 'numeric' value.")}
 #                 significance = 1
 #             } else {
