@@ -1,7 +1,7 @@
-b4eeb593432750cd6ac14cda9cfc4c2a *DESCRIPTION
+4622831c6883e4adf635cc728e9db3a8 *DESCRIPTION
 d32239bcb673463ab874e80d47fae504 *LICENSE
-c361bd1ef691fef3423698af3a2a28f5 *NAMESPACE
-3708ebdc8f711af5e7c1985dd7a058fe *NEWS.md
+01a58da64e97f9e2714bc61fa94e192b *NAMESPACE
+fe1d5bc5ceed1d60499ab69d8f00c785 *NEWS.md
 0a08401254a5a6c8f583c8dae59a13bf *R/Claddis.ordination.R
 1ee1a97d3dce12073ca4e6fbfe725e5c *R/Claddis.ordination_fun.R
 28ee566cf097db55fda6c6623afdff55 *R/adonis.dispRity.R
@@ -19,7 +19,7 @@ b28576f51fb22a01fd88585897ce54bc *R/clean.data_fun.R
 069291850ab7ec4fbeb84e79b2cc135a *R/crown.stem.R
 575885ec3f3f8102f049b753b3f1546e *R/custom.subsets.R
 ddb10fd6f88f1b0c7d611c6103506057 *R/custom.subsets_fun.R
-925110fc35ae9c7454469e7d69c99a83 *R/dispRity-package.R
+2e5f067bf0e839beefbf9579c095667a *R/dispRity-package.R
 8539d3f65702f250445940a3b1486c55 *R/dispRity.R
 d3dac1da1b87edba01a645e3e79bcf3a *R/dispRity.metric.R
 4b925ddff0b7c8e87e9be11757d8a56b *R/dispRity.utilities.R
@@ -38,7 +38,7 @@ dc80585ee256d80916475b2a947d493c *R/dtt.dispRity.R
 e6b9843cd0048fece356e74d031e4263 *R/model.test.sim.R
 d7c36da0dd84b5927349a702e4ba491d *R/model.test.wrapper.R
 9c906c7e0b7bfd82816c3e0e6dfb9b10 *R/model.test_fun.R
-8bd1644a06bf6f1aaf1b16df138923cb *R/morpho.utilities.R
+2058e565613591a20a66c265af65c124 *R/morpho.utilities.R
 3bafdd94ee1a909419622543cd23f7ee *R/morpho.utilities_fun.R
 ea5d4a28392f3619607a47ea45aef0b1 *R/null.test.R
 14a33f4633ec138501b245066e9bfe59 *R/null.test_fun.R
@@ -67,7 +67,7 @@ e48a6f52d0a61b9ca9bd5728f5c67c01 *R/test.dispRity.R
 f225cbf20c0ecab974015ff77f7a4ceb *R/test.dispRity_fun.R
 ee725f8b9707a0962f012044858f733f *R/tree.age.R
 f92d8e130bf6302f78ca4af76bcadefe *R/tree.age_fun.R
-ea03ca13fe43d5e2ae25cdda837e7584 *R/zzz.R
+1698ee7845303cfa3c60f2b31388610a *R/zzz.R
 082c0c972acf16b372e1f8db91dad2ee *data/BeckLee_ages.rda
 503efb0ca53df1ca234f5059d79bfa61 *data/BeckLee_disparity.rda
 edf2a3569aa3983df72a0e27f3a3f43d *data/BeckLee_mat50.rda
@@ -83,7 +83,7 @@ ed50636d889f0b6ab0cfb33540da44a0 *inst/packages.bib
 aa0a1f80893015a6b2a33b546affd8c3 *man/BeckLee_disparity.Rd
 aaa3bce522369f79e514277411768cc2 *man/Claddis.ordination.Rd
 85ec974fea40a195ba57ba080850c03f *man/adonis.dispRity.Rd
-d512b61d96ea6cab01184ae65e45e3fd *man/apply.NA.Rd
+5e893f8f0c1725bcd5141da4b981d1bf *man/apply.NA.Rd
 4f9a24d8e67c963515fee5cb4143c0c1 *man/bhatt.coeff.Rd
 9cafe7255457359313c00aa5d55d4062 *man/boot.matrix.Rd
 80b28b9485d909e0fb0c052e1e12bf70 *man/char.diff.Rd
@@ -134,5 +134,6 @@ c4578c6fd0ace180108c7ea673e2d03a *man/slice.tree.Rd
 ba31c45f3b590e9aa557d56e0a2679cc *man/test.dispRity.Rd
 22f2e031b634673a451b20432264299c *man/tree.age.Rd
 1d078a431d1943d6d4bfc79388ed3bfa *src/char.diff.c
+8bc43042b49145738cf858ab2cd3d031 *src/char.diff.hamming.c
 d15a6cb24d91d7be3378285df0c4f21c *src/dispRity.h
 7c22b1b500cab25872924e218f1645f5 *src/registerDynamicSymbol.c
