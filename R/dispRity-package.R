@@ -23,7 +23,7 @@
 # @importFrom vegan adonis vegdist
 # @importFrom geiger dtt ratematrix sim.char
 # @importFrom parallel parLapply detectCores makeCluster clusterExport stopCluster
-# @importFrom Claddis MorphDistMatrixFast
+# @importFrom Claddis calculate_morphological_distances
 
 
 NULL
@@ -41,7 +41,7 @@ NULL
 #' }
 #'
 #' @format three matrices and one phylogenetic tree.
-#' @source \url{http://rspb.royalsocietypublishing.org/content/281/1793/20141278.short}
+#' @source \url{https://www.royalsocietypublishing.org/doi/abs/10.1098/rspb.2014.1278}
 #' @references Beck RMD & Lee MSY. 2014. Ancient dates or accelerated rates?
 #' Morphological clocks and the antiquity of placental mammals.
 #' Proc. R. Soc. B 2014 281 20141278; DOI: 10.1098/rspb.2014.1278
