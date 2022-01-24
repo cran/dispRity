@@ -69,21 +69,25 @@ get.plot.params <- function(data, data_params, cent.tend, quantiles, rarefaction
             ## Getting the observed or bootstrapped data
             if(data_params$bootstrap && !observed_args$observed) {
                 ## Getting the bootstrapped data
-                box_data <- do.call(cbind, unlist(extract.dispRity(data, observed = FALSE), recursive = FALSE))
+                box_data <- unlist(extract.dispRity(data, observed = FALSE), recursive = FALSE)
             } else {
                 if(data_params$distribution || data_params$between.groups) {
-                    box_data <- do.call(cbind, extract.dispRity(data, observed = TRUE))
+                    box_data <- extract.dispRity(data, observed = TRUE)
                 } else {
-                    box_data <- do.call(cbind, unlist(extract.dispRity(data, observed = FALSE), recursive = FALSE))
+                    if(ncol(disparity$data) == 1) {
+                        box_data <- extract.dispRity(data, observed = TRUE)
+                    } else {
+                        box_data <- unlist(extract.dispRity(data, observed = FALSE), recursive = FALSE)
+                    }
                 }
             }
         } else {
             ## Find the correct rarefaction level
-            box_data <- do.call(cbind, unlist(extract.dispRity(data, observed = FALSE, rarefaction = rarefaction_level), recursive = FALSE))
+            box_data <- unlist(extract.dispRity(data, observed = FALSE, rarefaction = rarefaction_level), recursive = FALSE)
         }
         ## Updating the disparity data part
         if(data_params$between.groups) {
-            colnames(box_data) <- data_params$elements
+            names(box_data) <- data_params$elements
         }
         disparity$data <- box_data
     }
@@ -754,7 +758,7 @@ plot.preview <- function(data, specific.args, ...) {
     pch_order <- plot_args$pch
     if(n_groups > 1) {
         ## Get the list of subsets
-        subsets <- unlist(data$subsets, recursive = FALSE)
+        subsets <- lapply(data$subsets,`[[`, "elements")
         ## Make an empty classifier
         classifier <- rep(NA, nrow(data$matrix[[1]]))
         for(class in 1:n_groups) {
@@ -1073,6 +1077,7 @@ plot.model.sim <- function(data, add, density, quantiles, cent.tend, ...) {
     plot.continuous(plot_params, data_params, add = add, density = density)
 }
 
+## Plotting test metrics
 plot.test.metric <- function(data, specific.args, ...) {
 
     ## Adding slopes
@@ -1138,30 +1143,28 @@ plot.test.metric <- function(data, specific.args, ...) {
         }
     } else {    
         ## Create the template of step plots
-        steps_to_consider <- ifelse(n_steps == 3, 4, n_steps)
-        steps_plots <- results_plots <- base_matrix <- matrix(0, ceiling(sqrt(steps_to_consider)), floor(sqrt(steps_to_consider)), byrow = TRUE)
-        steps_plots[1:n_steps] <- 1:n_steps
-        steps_plots[1:n_steps] <- steps_plots[1:n_steps] + n_plots
-        steps_plots <- t(steps_plots)
-        ## Create the template for the normal plots
-        results_plots <- base_matrix
-        results_plots[] <- 1
-        ## Create the columns of for layout template
-        if(n_plots > 1) {
-            for(i in 2:n_plots) {
-                ## Add a row to the step plots
-                tmp <- base_matrix
-                tmp[1:n_steps] <- steps_plots[1:n_steps] + max(steps_plots[1:n_steps], na.rm = TRUE) + 1 - min(steps_plots[1:n_steps], na.rm = TRUE)
-                steps_plots <- rbind(steps_plots, tmp)
-                ## Add a row to the normal plots
-                tmp <- base_matrix
-                tmp[] <- i
-                results_plots <- rbind(results_plots, tmp)
-            }
+
+        ## How many steps in each block?
+        steps_to_consider <- n_steps + n_steps %% 2
+
+        ## Create the base matrix for plotting
+        base_matrix <- matrix(0, ceiling(sqrt(steps_to_consider)), floor(sqrt(steps_to_consider)), byrow = TRUE)
+
+        ## Get the column for the plot results
+        results_plots <- matrix(rep(1:n_plots, each = steps_to_consider), ncol = ncol(base_matrix), byrow = TRUE)
+
+        ## Create the vector of empty steps plots
+        steps_plots <- rep(c(base_matrix), n_plots)
+        ## Fill the vector of step plots
+        for(i in 1:n_plots) {
+            select <- (1+(steps_to_consider*(i-1))):(steps_to_consider*i)
+            start_val <- ifelse(max(steps_plots) == 0, max(results_plots), max(steps_plots))
+            steps_plots[select[1:length(steps_to_visualise)]] <- (start_val+1):(start_val+length(steps_to_visualise))
         }
 
         ## Create the layout
-        set_layout <- layout(cbind(results_plots, steps_plots))
+        set_layout <- layout(cbind(results_plots, matrix(steps_plots, ncol = ncol(base_matrix), byrow = TRUE)))
+
         # layout.show(set_layout)
         ## Parameter backup
         op_tmp <- NULL
@@ -1389,4 +1392,88 @@ plot.test.metric <- function(data, specific.args, ...) {
     if(n_plots > 1 && !is.null(op_tmp)) {
         par(op_tmp)
     }
+}
+
+## Plot axes
+plot.axes <- function(data, ...) {
+
+    ## Magic value for below
+    transparency <- 0.5
+
+    ## Get the number of groups
+    n_groups <- length(data$dim.list)
+
+    ## Get the columns to plot
+    if(is.null(data$call$colnames)) {
+        names.arg <- paste0("dim.", 1:length(data$scaled.var[[1]]))
+    } else {
+        names.arg <- data$call$colnames
+    }
+
+    ## Plotting windows
+    op_tmp <- par(mfrow = c(ceiling(sqrt(n_groups)), round(sqrt(n_groups))))
+
+    ## Getting the plotting parameters
+    plot_params <- list(...)
+    ## Colour
+    if(is.null(plot_params$col)) {
+        plot_params$col <- rep("grey", n_groups)
+    } else {
+        if(length(plot_params$col) < n_groups) {
+            plot_params$col <- rep(plot_params$col, n_groups)
+        }
+    }
+    ## Main
+    if(is.null(plot_params$main)) {
+        plot_params$main <- names(data$dim.list)
+    } else {
+        if(length(plot_params$main) < n_groups) {
+            plot_params$main <- rep(plot_params$main, n_groups)
+        }
+    }
+    ## Ylab
+    if(is.null(plot_params$ylab)) {
+        plot_params$ylab <- "Scaled variance"
+    }
+
+    ## Get the max number of dimensions
+    max_dim <- length(data$scaled.var[[1]])
+    ## Xlim (selecting the maximum number of bars)
+    if(is.null(plot_params$xlim)) {
+        if(max(data$dimensions) != max_dim) {
+            ## Only display the selected dimensions + 15%
+            display <- ceiling(max(data$dimensions)*1.1)
+            if(display <= max_dim) {
+                max_dim <- display
+            }
+        }
+    } else {
+        display <- max(plot_params$xlim)
+        if(display <= max_dim) {
+            max_dim <- display
+        }
+        plot_params$xlim <- NULL
+    }
+
+    ## Plotting the bars
+    for(one_group in 1:n_groups) {
+        ## Cum bars
+        bar_params <- plot_params
+        bar_params$col <- grDevices::adjustcolor(bar_params$col[one_group], alpha.f = transparency)
+        bar_params$main <- bar_params$main[one_group]
+        bar_params$height <- data$cumsum.var[[one_group]][1:max_dim]
+        bar_params$names.arg <- names.arg[1:max_dim]
+        bars_coords <- do.call(barplot, bar_params)
+        ## Scaled bars
+        bar_params <- plot_params
+        bar_params$col <- bar_params$col[one_group]
+        bar_params$height <- data$scaled.var[[one_group]][1:max_dim]
+        bar_params$add <- TRUE
+        do.call(barplot, bar_params)
+        ## Add the threshold line
+        abline(h = data$call$threshold, lty = 2)
+        abline(v = bars_coords[max(data$dim.list[[one_group]])], lty = 2)
+    }
+    par(op_tmp)
+    return(invisible())
 }

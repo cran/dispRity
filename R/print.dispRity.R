@@ -160,7 +160,32 @@ print.dispRity <- function(x, all = FALSE, ...) {
                     } else {
                         cat(paste0("."))
                     }
-                    cat(paste0("\nUse summary(", x_name, ") or plot(",x_name, ") for more details."))
+                    cat(paste0("\nUse summary(x) or plot(x) for more details."))
+                    return(invisible())
+                },
+                axes = {
+                    ## Get the groups names
+                    groups <- names(x$dim.list)
+                    ## Get the in_groups variable
+                    in_groups <- if(length(groups) == 1 && groups[1] == "whole_space") {
+                        "in the whole trait space"
+                    } else {
+                        if(length(groups) < 5) {
+                            paste0("in the following groups: ", paste0(groups, collapse = ", "))
+                        } else {
+                            paste0("in the ", length(groups), " following groups: ", paste0(groups[1:5], collapse = ", "), ", ..")
+                        }
+                    }
+                    cat(paste0(
+                        ## N axes
+                        "The first ", length(x$dimensions), " dimensions are needed to express ",
+                        ## At least
+                        ifelse(x$call$inc.threshold, "at least ", "up to "),
+                        ## Percentage var
+                        paste0(x$call$threshold*100, "% of the variance "),
+                        ## In groups
+                        in_groups, ".\n"))
+                    cat(paste0("You can use x$dimensions to select them or use plot(x) and summary(x) to summarise them.\n"))
                     return(invisible())
                 }
             )

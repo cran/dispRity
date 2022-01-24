@@ -22,6 +22,34 @@ dispRity 0.2.0 (2016-04-01)
 <!--   * `dtt.dispRity` now works with any tree (including non-ultrametric ones and fossils only ones). -->
 <!--   * `dtt.dispRity` now works with time-slicing. -->
 
+
+dispRity v1.6.8 (2022-01-24)
+=========================
+
+### NEW FEATURES
+
+ * *New* data function: `select.axes` for selecting and analysing the number of axes required to contain an arbitrary amount of variance.
+ * *New* utility function: `randtest.dist` for measuring the distance between the observed statistic and a specific quantile of the simulated statistic (thanks to [Frane Babarovic](https://twitter.com/FBabarovic) for the inspiration).
+
+### MINOR IMPROVEMENTS
+
+ * Formalised the grouping logic for `custom.subsets` and `select.axes`. This can create some minor user level changes namely: warning messages for empty subsets now correctly mentions "subsets" (rather than subsamples); groups with incorrect elements are now always flagged as errors (rather than just ignored). The changes at the developer level is that the logic is now made smoother and exported in `custom.subsets_fun.R`.
+ * Added a `function.index.csv` list (and updater) to help developers find internal functions locations easily.
+ * Restricted the type-I error inflation warning message in `test.dispRity` to only occur when using a test of class `"htest"`.
+ * Continuous Integration has been moved from Travis-CI to GitHub Actions.
+
+### BUG FIXES
+ 
+ * Removed warning in `dispRity` when selecting a specific number of dimensions (old warning artefact).
+ * Fixed bug in `plot.dispRity` when using `type = "preview"` on bootstrapped data and for `type = "box"` when the subsets to plot are from different sizes (now plots all the data correctly).
+ * Fixed bug when using `chrono.subsets` with `"continuous"` method a `FADLAD` data containing only node values (now correctly taken into account; thanks to [Peng-Wei Li](https://www.researchgate.net/profile/Peng-Wei-Li) for noticing it) and when using `chrono.subsets` with `"gradual.*"` models on empty subsets.
+ * `standardGeneric` functions are now correctly interpreted as functions throughout the package.
+ * Fixed bug when plotting level 1 disparity metric results without bootstrapped (`observed = TRUE` is now used as the default).
+ * Fixed bug when plotting `test.metric` plots with `save.steps` options with more than two types of shifts.
+ * Fixed bug with `null.test` which is now correctly managing the number of dimensions inherited from `dispRity` objects (thanks to [Alex Slavenko](https://alexslavenko.weebly.com/) for spotting this one and the two above).
+ * Fixed bug when using level 2 dimension metrics on unidimensional data (the metric is now detected as a level 2 correctly; thanks to [Catherine Klein](https://www.researchgate.net/profile/Catherine-Klein) and [Rachel Warnock](https://www.gzn.nat.fau.de/palaeontologie/team/professors/rachel-warnock/) for noticing that one).
+ * Update internal use of `is(data, c("array", "matrix"))` to `is.array(data)` for R 4.1.2.
+ 
 dispRity v1.6.0 (2021-04-16) *dispRitree*
 =========================
 
@@ -43,7 +71,7 @@ dispRity v1.6.0 (2021-04-16) *dispRitree*
   * remove the `"only"` text when printing `dispRity` objects that contains "only" matrices (even though that can be 10k matrices!).
   * added a dedicated behaviour to `summary.dispRity` for `"dispRity"` `"randtest"` objects to output "ready-to-publish" result tables.
   * some error messages have been updated to be slightly more useful.
-  * added the `estimation.details` argument to `multi.ace` allowing to also return specific arguments from the ancestral states estimation (thanks to [Armin Elsler](https://research-information.bris.ac.uk/en/persons/armin-elsler) for the suggestion).
+  * added the `estimation.details` argument to `multi.ace` allowing to also return specific arguments from the ancestral states estimation (thanks to [Armin Elsler](https://www.researchgate.net/profile/Armin-Elsler-2) for the suggestion).
   * Added new option `inc.nodes` to `clean.data` whether to check if the nodes in the tree match the labels in the matrix.
   * `make.metric` with the option `silent = TRUE` now outputs a list of info rather than only the level of the metric. You can reproduce the old behaviour using `make.metric(..., silent = TRUE)$type)`.
   * Fixed bug in `plot` using `preview` when the given argument `pch` did not match the number of groups (the different `pch` arguments are now used correctly).
@@ -98,7 +126,7 @@ dispRity v1.5.0 (2020-09-25) *between groups*
   * Fixed a bug in `chrono.subsets` where the `"*.split"` methods would bug if the last slice is through a single edge.
   * Fixed a bug in `dispRity` where some 1D matrices could loose their class for certain metrics.
 
-dispRity v1.4.0 *getting faster* (2020-05-05)
+dispRity v1.4.0 (2020-05-05) *getting faster*
 =========================
 
 ### NEW FEATURES
@@ -114,8 +142,7 @@ dispRity v1.4.0 *getting faster* (2020-05-05)
   * updated class evaluations throughout the package for `R` version `4.0.0`: `class(.) == *` is now `is(., *)`.
   * updated `...` argument bug PR#16223.
   * In `make.metric` the argument `...` is now ignored if any `names(...)` is `"tree"` or `"phy"`.
-  * fixed bug in `neighbours` and `span.tree.length` when feeding "distance" like metrics (thanks to [Ashley Reaney](https://www.researchgate.net/profile/Ashley-Reaney)
- for finding that one).
+  * fixed bug in `neighbours` and `span.tree.length` when feeding "distance" like metrics (thanks to Ashley Reaney for finding that one).
 
 ### MINOR IMPROVEMENTS
 
@@ -131,7 +158,7 @@ dispRity v1.4.0 *getting faster* (2020-05-05)
   * `chrono.subsets` with multiple trees now stretches the root edges length to match the oldest tree.
 
 
-dispRity v1.3 *many metrics* (2019-08-15)
+dispRity v1.3 (2019-08-15) *many metrics*
 =========================
 
 ### NEW FEATURES
@@ -190,7 +217,7 @@ dispRity v1.2.3 (2019-03-12)
   * `...`  are now properly handled by internal metric testing functions for more accurate error messages.
   * `char.diff` names are now properly protected in the `C` implementation to comply with new `rcheck` requirements.
 
-dispRity v1.2 *model tests* (2018-09-19)
+dispRity v1.2 (2018-09-19) *model tests*
 =========================
 
 ### NEW FEATURES
@@ -212,7 +239,7 @@ dispRity v1.2 *model tests* (2018-09-19)
   * Corrected `char.diff` to properly reflect the probability of different splits between characters (thanks to [Abigail Pastore](https://github.com/aipastore)).
 
 
-dispRity v1.1 *got CRAN* (2018-03-20)
+dispRity v1.1 (2018-03-20) *got CRAN*
 =========================
   
 ### NEW FEATURES
@@ -224,7 +251,7 @@ dispRity v1.1 *got CRAN* (2018-03-20)
   * Added default Cailliez correction to `Claddis.ordination` function (with `add = TRUE`).
   * Improved test coverage.
 
-dispRity v1.0.3 *got CRAN* (2018-03-20)
+dispRity v1.0.3 (2018-03-20) *got CRAN*
 =========================
   
 ### NEW FEATURES
@@ -247,7 +274,7 @@ dispRity v1.0.3 *got CRAN* (2018-03-20)
 
   * Removed `Claddis.ordination` function to comply with the CRAN requirement (this function is still live in the [GitHub version](https://github.com/TGuillerme/dispRity) 1.1).
 
-dispRity v0.5 *covered with tests* (2017-12-20)
+dispRity v0.5 (2017-12-20) *covered with tests*
 =========================
 
 ### NEW FEATURES
@@ -298,7 +325,7 @@ dispRity v0.4.1 (2017-11-13)
   * Fixed fuzzy match issues in `slice.tree`.
 
 
-dispRity v0.4 *user friendly* (2017-08-21)
+dispRity v0.4 (2017-08-21) *user friendly*
 =========================
 
 ### NEW FEATURES
@@ -327,7 +354,7 @@ dispRity v0.4 *user friendly* (2017-08-21)
   * **Modified function**: `cust.series` is now renamed `custom.subsamples` (to avoid confusion with `custard.subsamples`!). Its `factor` argument as been changed to `groups` and can now take a simple list.
 
 
-dispRity v0.3 *dispRity lite* (2017-01-25)
+dispRity v0.3 (2017-01-25) *dispRity lite*
 =========================
 
 ### NEW FEATURES
@@ -344,7 +371,7 @@ dispRity v0.3 *dispRity lite* (2017-01-25)
   * **Removed** `rm.last.axis` argument in `boot.matrix`. It is now replaced by `dimensions`.
   * **Changed argument** in `plot.dispRity`, `type = "lines"` is now replaced by `type = "line"`.
 
-dispRity v0.2.1 *making stuff up* (2016-11-07)
+dispRity v0.2.1 (2016-11-07) *making stuff up*
 =========================
 
 ### NEW FEATURES

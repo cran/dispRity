@@ -27,6 +27,7 @@ useDynLib(dispRity, .registration = TRUE)
 ## Data utilities
 export(Claddis.ordination)
 export(geomorph.ordination)
+export(select.axes)
 
 ##Functions
 export(boot.matrix)
@@ -105,6 +106,7 @@ export(get.bin.ages)
 export(make.metric)
 export(pair.plot)
 export(random.circle)
+export(randtest.dist)
 export(reduce.matrix)
 export(reduce.space)
 export(remove.zero.brlen)
@@ -123,7 +125,6 @@ export(sim.morpho)
 export(multi.ace)
 
 ##S3 
-
 S3method(adonis, dispRity)
 S3method(dtt, dispRity)
 S3method(matrix, dispRity)

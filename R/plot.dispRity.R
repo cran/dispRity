@@ -29,9 +29,9 @@
  #' 
 #'      \item if \code{type = "preview"}, the specific arguments can be:
 #'      \itemize{
-#'          \item code{dimensions}: two specific dimensions to plot (default is \code{specific.args = list(dimensions = c(1,2)});
-#'          \item code{matrix}: which specific matrix to plot the data from (by default, all the matrices are used).
-#'          \item code{tree}: whether to plot the underlying tree(s) or not. Can be either logical, whether to plot no tree (default is \code{specific.args = list(tree = FALSE)}), all trees (\code{specific.args = list(tree = TRUE)}) or a specific set of trees (e.g. \code{specific.args = list(tree = c(1,2))})
+#'          \item \code{dimensions}: two specific dimensions to plot (default is \code{specific.args = list(dimensions = c(1,2)});
+#'          \item \code{matrix}: which specific matrix to plot the data from (by default, all the matrices are used).
+#'          \item \code{tree}: whether to plot the underlying tree(s) or not. Can be either logical, whether to plot no tree (default is \code{specific.args = list(tree = FALSE)}), all trees (\code{specific.args = list(tree = TRUE)}) or a specific set of trees (e.g. \code{specific.args = list(tree = c(1,2))})
 #'      }
 #' 
 #'      \item for plots with legends (if \code{type = "preview"}; if data is \code{"randtest"} or \code{"test.metric"}) you can pass any non ambiguous arguments for \code{legend} such as \code{specific.args = list(legend = list(x = 1, y = 2, bg = "blue"))}. When the plot generates two legends (e.g. when the data is \code{"test.metric"}), these arguments can be a list (e.g. \code{specific.args = list(legend = list(list(x = "bottomright"), list(x = "topright")))}. \emph{HINT}: to remove the legends all together you can use \code{specific.args = list(legend = FALSE)}.
@@ -118,7 +118,7 @@ plot.dispRity <- function(x, ..., type, quantiles = c(50, 95), cent.tend = media
     }
 
     #DATA
-    if(length(class(data)) > 1 && !(is(data, "matrix") && is(data, "array"))) {
+    if(length(class(data)) > 1 && !is.array(data)) {
 
         ## Subclass plots
 
@@ -199,6 +199,16 @@ plot.dispRity <- function(x, ..., type, quantiles = c(50, 95), cent.tend = media
             ## Exit subclass plots
             return(invisible())
         }
+
+        ## select.axes plots
+        if(is(data, c("dispRity")) && is(data, c("axes"))) {
+
+            ## Plot the data
+            plot.axes(data, ...)
+                
+            ## Exit subclass plots
+            return(invisible())
+        }        
     }
 
     ## ----
@@ -206,7 +216,7 @@ plot.dispRity <- function(x, ..., type, quantiles = c(50, 95), cent.tend = media
     ## ----
 
     ## Special case when the data is a matrix (make a dummy disparity data)
-    if(is(data, c("matrix", "array"))) {
+    if(is.array(data)) {
         ## Make a minimal dispRity object
         data <- make.dispRity(data)
         ## Set the type to "preview only"
@@ -223,7 +233,7 @@ plot.dispRity <- function(x, ..., type, quantiles = c(50, 95), cent.tend = media
             type <- "preview"
         } else {
             if(type != "preview") {
-                stop.call(match_call$x, paste0(" must contain disparity data.\nTry running dispRity(", as.expression(match_call$x), ", ...)"))                
+                stop.call(match_call$x, paste0(" must contain disparity data.\nTry running dispRity(", as.expression(match_call$x), ", ...)"))
             }
         }
     }

@@ -1,6 +1,6 @@
 ## SANITIZING FUNCTIONS
 ## Checking the class of an object and returning an error message if != class
-check.class <- function(object, class, msg, errorif = FALSE) {
+check.class <- function(object, class, msg, errorif = FALSE, report) {
     ## Get call
     match_call <- match.call()
 
@@ -9,10 +9,15 @@ check.class <- function(object, class, msg, errorif = FALSE) {
     ## class_length variable initialisation
     length_class <- length(class)
 
+    ## Get the report argument
+    if(missing(report)) {
+        report <- 1:length_class
+    }
+
     ## Set msg if missing
     if(missing(msg)) {
         if(length_class != 1) {
-            msg <- paste(" must be of class ", paste(class, collapse = " or "), ".", sep = "")
+            msg <- paste(" must be of class ", paste(class[report], collapse = " or "), ".", sep = "")
         } else {
             msg <- paste(" must be of class ", class, ".", sep = "")
         }
@@ -213,7 +218,7 @@ check.dispRity.tree <- function(tree, data, bind.trees = FALSE) {
     }
 
     ## Make the data into "dispRity" format for testing
-    if(!missing(data) && is(data, "matrix")) {
+    if(!missing(data) && is.array(data)) {
         if(!is(data, "dispRity")) {
             data <- list(matrix = list(data))
         }
