@@ -10,21 +10,6 @@
 #'
 #' @concept disparity ordination phylogeny cladistic morphometric ecology
 #'
-# @import ape
-# @import stats
-# @importFrom geometry convhulln 
-# @importFrom ade4 randtest as.randtest 
-# @importFrom grDevices colorRampPalette grey 
-# @importFrom caper comparative.data 
-# @importFrom graphics axis boxplot hist image lines mtext par plot points polygon text legend
-# @importFrom utils combn data capture.output tail
-# @importFrom phyclust gen.seq.HKY 
-# @importFrom phangorn dist.hamming NJ RF.dist CI RI optim.parsimony parsimony
-# @importFrom vegan adonis vegdist
-# @importFrom geiger dtt ratematrix sim.char
-# @importFrom parallel parLapply detectCores makeCluster clusterExport stopCluster
-# @importFrom Claddis calculate_morphological_distances
-
 
 NULL
 
@@ -138,7 +123,7 @@ NULL
 #'   \item \code{healy} A life history analysis of the pace of life in animals. The data is a 6 dimensions ordination (PCA) of 6 life history traits from 285 animal species.
 #' }
 #' 
-#' @source \url{https://onlinelibrary.wiley.com/doi/full/10.1002/ece3.6452}
+#' @source \url{https://onlinelibrary.wiley.com/doi/10.1002/ece3.6452}
 #' @references Guillerme T, Puttick MN, Marcy AE, Weisbecker V. \bold{2020} Shifting spaces: Which disparity or dissimilarity measurement best summarize occupancy in multidimensional spaces?. Ecol Evol. 2020;00:1-16. (doi:10.1002/ece3.6452)
 #' @references Beck, R. M., & Lee, M. S. (2014). Ancient dates or accelerated rates? Morphological clocks and the antiquity of placental mammals. Proceedings of the Royal Society B: Biological Sciences, 281(1793), 20141278.
 #' @references Wright, D. F. (2017). Bayesian estimation of fossil phylogenies and the evolution of early to middle Paleozoic crinoids (Echinodermata). Journal of Paleontology, 91(4), 799-814.
