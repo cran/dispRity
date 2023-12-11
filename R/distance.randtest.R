@@ -2,7 +2,7 @@
 #'
 #' @description Measures the distance between the observed statistic from a \code{"randtest"} object and some specific quantile of the simulated data.
 #'
-#' @param randtest an object of class \code{"randtest"}
+#' @param xtest an object of class \code{"randtest"}
 #' @param quantile a \code{numeric} value for the quantile edges to compare the observed data to on either sides (by default \code{quantile = c(0.025. 0.975)}).
 #' @param abs \code{logical}, whether to calculate the distance as an absolute value (\code{TRUE}) or not (\code{FALSE} - default).
 #' 
@@ -22,17 +22,19 @@
 #' dummy_test ; plot(dummy_test)
 #' 
 #' ## The distance between the observed data and the 95% quantile
-#' randtest.dist(dummy_test)
+#' distance.randtest(dummy_test)
 #' 
 #' ## The absolute distance from the median
-#' randtest.dist(dummy_test, quantile = 0.5, abs = TRUE)
+#' distance.randtest(dummy_test, quantile = 0.5, abs = TRUE)
 #' 
 #' @seealso \code{\link[ade4]{randtest}} \code{\link{randtest.dispRity}}
 #' 
 #' @author Thomas Guillerme
 #' @export
 
-randtest.dist <- function(randtest, quantile = c(0.025, 0.975), abs = FALSE) {
+distance.randtest <- function(xtest, quantile = c(0.025, 0.975), abs = FALSE) {
+
+    randtest <- xtest
 
     ## Checking randtest
     check.class(randtest, "randtest")

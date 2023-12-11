@@ -1,4 +1,4 @@
-#Package version checking
-.onAttach <- function(libname = find.package("dispRity"), pkgname = "dispRity") {
-    packageStartupMessage(paste0("       --- dispRity package ---\nThis is the CRAN release version (1.7.0) of the package.\nFor news, vignettes and future releases,\nvisit https://github.com/TGuillerme/dispRity\n"))
-}
+# ## Package version checking
+# .onAttach <- function(libname = find.package("dispRity"), pkgname = "dispRity") {
+#     packageStartupMessage(paste0("       --- dispRity package ---\nGitHub release.\n"))
+# }
